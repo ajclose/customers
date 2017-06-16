@@ -4,22 +4,22 @@
 (function () {
 
   'use strict';
-  function getPerson() {
-  fetch('https://randomuser.me/api/')
+  function getPerson(number) {
+  fetch('https://randomuser.me/api/?results='+number)
   .then( function(response){
     return response.json()
   })
   .then(function(json){
-    console.log(json.results[0])
-    const firstName = json.results[0].name.first
-    const lastName = json.results[0].name.last
-    const email = json.results[0].email
-    const street = json.results[0].location.street
-    const city = json.results[0].location.city
-    const state = json.results[0].location.state
-    const postcode = json.results[0].location.postcode
-    const phone = json.results[0].phone
-    const picture = json.results[0].picture.large
+    for (var i = 0; i < json.results.length; i++) {
+    const firstName = json.results[i].name.first
+    const lastName = json.results[i].name.last
+    const email = json.results[i].email
+    const street = json.results[i].location.street
+    const city = json.results[i].location.city
+    const state = json.results[i].location.state
+    const postcode = json.results[i].location.postcode
+    const phone = json.results[i].phone
+    const picture = json.results[i].picture.large
 
     const html = `
         <div class="person">
@@ -46,11 +46,12 @@
           </div>
         `
       document.querySelector(".customers").insertAdjacentHTML('beforeend', html)
+      }
   })
 
 }
 
-for (var i = 0; i <12; i++) {
-  getPerson()
-}
+
+getPerson(12)
+
 })();
